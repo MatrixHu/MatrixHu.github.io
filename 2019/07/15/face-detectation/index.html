@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Anaconda(Python37)+OpenCV实现人脸识别">
+  <meta name="description" content="">
   <meta name="author" content="Kevin Hu">
   <!-- Open Graph Data -->
-  <meta property="og:title" content="Pyhotn基础人脸识别">
-  <meta property="og:description" content="Anaconda(Python37)+OpenCV实现人脸识别">
+  <meta property="og:title" content="Python基础人脸识别">
+  <meta property="og:description" content="">
   <meta property="og:site_name" content="WhiteAvalon">
   <meta property="og:type" content="article">
   <meta property="og:image" content="http://yoursite.com">
@@ -43,7 +43,7 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="page-title with-background-image">
-          <p class="title">Pyhotn基础人脸识别</p>
+          <p class="title">Python基础人脸识别</p>
           <p class="subtitle"></p>
         </div>
         <div class="site-menu with-background-image">
@@ -100,8 +100,14 @@
           <!-- Date -->
           <span class="date-time info">On
             <span class="date">2019-07-15</span>
-            <span class="time">16:42:05</span>
+            <span class="time">17:33:29</span>
           </span>
+          
+          <!--  Categories  -->
+            <span class="categories info">Under 
+
+<a href="/categories/PC/">PC</a>
+</span>
           
         </div>
         <!-- Tags -->
@@ -109,15 +115,19 @@
           <div class="post-tags text-muted">
             Tags: 
 
-<a class="tag" href="/tags/try-it/">#try_it</a>
+<a class="tag" href="/tags/Python/">#Python</a>
 
 
           </div>
         
         <!-- Post Main Content -->
         <div class="post-content">
-          <p>Python基础人脸识别<br>一、    理论基础<br>二、    环境搭建<br>1 资源准备<br>2 软件安装<br>2.1 安装Anaconda<br>2.2 安装opencv-python.whl<br>2.3 安装OpenCV<br>3 测试IDE<br>三、    程序编写<br>1 读取静态图片<br>2 读取静态图片并识别人脸<br>3 读取摄像头动态视频并识别人脸</p>
-<p>一、理论基础<br>·Python语言：简单易学、清晰美观、兼容性强，时下机器学习热门语言<br>·OpenCV视觉库：开源跨平台计算机视觉库，兼容性强，自带各类视觉库与算法<br>·Anaconda：一个开源的Python发行版本，本身包含了Python、conda等180多个科学包及其依赖项，以及一大堆安装好的工具包比如numpy、pandas等，还可简单地安装其它拓展包。主要用于多python版本下的环境管理（本次实验不用多环境）。<br>1#Python自带的IDE为IDLE，Anaconda自带的IDE为Spyder。为避免冲突，本实验不单独安装Python，仅安装Anaconda，使用Aanconda自带的Python及其IDE（Spyder）。<br>2#建议安装前先卸载已有python，运行原python的安装文件后选uninstall即可。<br>3#若不卸载已有python（python文件夹下安装过其它库，卸载会影响之前程序的使用），则需改变path并在anaconda中设置多环境，本实验不详述。</p>
+          <p>Anaconda(Python37)+OpenCV实现人脸识别</p>
+<a id="more"></a>
+<p>一、理论基础<br>二、环境搭建<br>1 资源准备<br>2 软件安装<br>2.1 安装Anaconda<br>2.2 安装opencv-python.whl<br>2.3 安装OpenCV<br>3 测试IDE</p>
+<p>三、程序编写<br>1 读取静态图片<br>2 读取静态图片并识别人脸<br>3 读取摄像头动态视频并识别人脸</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&quot;&quot;&quot;</span><br><span class="line">Created on Tue Jul  2 16:22:12 2019</span><br><span class="line">识别摄像头中的人脸、眼镜并框出</span><br><span class="line">@author: Kevin</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">import cv2</span><br><span class="line">import numpy as np</span><br><span class="line">#调用人脸识别、眼睛检测库</span><br><span class="line">face_cascade = cv2.CascadeClassifier(&quot;C:\Python\opencv\sources\data\haarcascades\haarcascade_frontalface_default.xml&quot;)</span><br><span class="line">eye_cascade = cv2.CascadeClassifier(&quot;C:\Python\opencv\sources\data\haarcascades\haarcascade_eye.xml&quot;)</span><br><span class="line">cap=cv2.VideoCapture(0) #连接摄像头</span><br><span class="line"></span><br><span class="line">while True:    </span><br><span class="line">    ret,img=cap.read() #获得图像</span><br><span class="line">    gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) #获得图像的灰度信息</span><br><span class="line">    faces = face_cascade.detectMultiScale(gray,1.1,5) #检测人脸</span><br><span class="line">    if len(faces)&gt;0: #若检测到人脸，则绘图，并检测眼睛</span><br><span class="line">        for faceRect in faces:           </span><br><span class="line">            x,y,w,h = faceRect            </span><br><span class="line">            cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2) #框出面部</span><br><span class="line">            roi_gray = gray[y:y+h//2,x:x+w]            </span><br><span class="line">            roi_color = img[y:y+h//2,x:x+w]            </span><br><span class="line">            eyes = eye_cascade.detectMultiScale(roi_gray,1.1,1,cv2.CASCADE_SCALE_IMAGE,(2,2)) #检测眼睛     </span><br><span class="line">            for (ex,ey,ew,eh) in eyes:                </span><br><span class="line">                cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2) #框出眼镜</span><br><span class="line">    cv2.imshow(&quot;img&quot;,img)    </span><br><span class="line">    if cv2.waitKey(1) &amp; 0xFF == ord(&apos;q&apos;):</span><br><span class="line">        break</span><br><span class="line">cv2.destroyAllWindows()</span><br></pre></td></tr></table></figure>
+<p>测试1：<br><img src="/images/2/1.png" alt="Result" title="1"><br>测试2：<br><img src="/images/2/2.png" alt="Result" title="2"><br>测试内容为另一台显示器上的视频<br>可以看到识别效果其实一般，算法有待改进</p>
 
         </div>
       </div>
